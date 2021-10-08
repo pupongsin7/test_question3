@@ -5,8 +5,8 @@ const puppeteer = require('puppeteer')
 main()
 async function main() {
   const response = await ClickStart()
-  console.log(response[response.findIndex((a) => a === myArgs)+1])
-  
+  find = response.findIndex((a) => a == myArgs)
+  console.log(response == -1 ? `can't find` : response[find + 1])
 }
 async function ClickStart() {
   const browser = await puppeteer.launch({ headless: false });
@@ -18,8 +18,8 @@ async function ClickStart() {
   const array = await page.evaluate((body) => {
     var contents = body.querySelectorAll('tr td');
     var ids = []
-    contents.forEach( (x) =>{
-      ids.push(x.innerHTML)
+    contents.forEach((x) => {
+      ids.push(x.innerHTML.trim())
     })
     return ids
   }, bodyHandle);
